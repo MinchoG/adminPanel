@@ -3,6 +3,7 @@ const db = require('./models/db');
 const bodyParser = require('body-parser');
 const port = 3001;
 const app = express();
+const employeesRouter = require('./routes/employees');
 
 
 app.use(function(req, res, next) {
@@ -20,6 +21,7 @@ app.get('/', function(req, res) {
   res.status(200).send('OK');
 });
 
+app.use('/employees', employeesRouter);
 
 app.listen(port, () => {
   console.log(`Listening on :${port}`);
