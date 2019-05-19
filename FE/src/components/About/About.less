@@ -1,0 +1,29 @@
+@import "Theme.less";
+
+.About {
+    grid-template-columns: auto 300px;
+    column-gap: 30px;
+
+    @media @smallscreen {
+        grid-template-columns: auto;
+    }
+
+    h2 {
+        grid-column: 1;
+    }
+
+    p {
+        grid-column: 1;
+    }
+
+    img {
+        grid-row-start: 1;
+        grid-row-end: 4;
+        grid-column: 2;
+        align-self: center;
+
+        @media @smallscreen {
+            display: none;
+        }
+    }
+}

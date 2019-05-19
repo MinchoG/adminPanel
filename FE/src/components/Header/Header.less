@@ -1,0 +1,40 @@
+@import 'Theme.less';
+
+header {
+  background-color: @dark-color;
+  height: 60px;
+  overflow: hidden;
+
+  ul {
+    height: 100%;
+    margin: 0;
+
+    @media @smallscreen {
+      padding: 0 10px;
+    }
+
+    li {
+      list-style: none;
+      float: left;
+
+      a {
+        color: @light-color;
+        display: block;
+        height: 100%;
+        padding: 0 25px;
+        line-height: 60px;
+        font-size: 22px;
+        font-weight: bold;
+        text-decoration: none;
+
+        @media @smallscreen {
+          padding: 0 5px;
+        }
+      }
+
+      &:first-child a {
+        color: @accent-color;
+      }
+    }
+  }
+}

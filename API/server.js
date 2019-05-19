@@ -1,9 +1,11 @@
 const express = require('express');
-const db = require('./models/db');
+const Db = require('./models/Db');
 const bodyParser = require('body-parser');
 const port = 3001;
 const app = express();
 const employeesRouter = require('./routes/employees');
+const openingsRouter = require('./routes/openings');
+const imagesRouter = require('./routes/images');
 
 
 app.use(function(req, res, next) {
@@ -22,10 +24,12 @@ app.get('/', function(req, res) {
 });
 
 app.use('/employees', employeesRouter);
+app.use('/openings', openingsRouter);
+app.use('/images', imagesRouter);
 
 app.listen(port, () => {
   console.log(`Listening on :${port}`);
-  db.connection
+  Db.connection
     .sync()
     .then(() => console.log('Database connected!'))
     .catch(err => console.log('Error: ' + err));

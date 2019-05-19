@@ -47,4 +47,5 @@ const verifyMiddleware = (req, res, next) => {
   next();
 };
 
+
 module.exports = { verifyMiddleware, sign };

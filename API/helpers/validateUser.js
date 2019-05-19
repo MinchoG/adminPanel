@@ -1,7 +1,7 @@
-const db = require('../models/db');
+const Db = require('../models/Db');
 
 module.exports = (username, password) => {
-  return db.admin.findOne({
+  return Db.admin.findOne({
     where: { username, password }
   });
 };
