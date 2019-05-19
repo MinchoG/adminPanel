@@ -16,6 +16,7 @@ import {
   PUT_SELECTED_FILE_IN_STORE,
   FETCH_OPENINGS,
   RECEIVE_OPENINGS,
+  RECEIVE_OPENINGS_BY_ID,
   DELETE_OPENING,
   EDIT_OPENING,
   TAKE_UI_SNAPSHOT,
@@ -24,6 +25,7 @@ import {
   SAVE_OPENINGS_PUT,
   ADD_OPENING,
   EDIT_OPENING_VALUE,
+  FETCH_OPENINGS_BY_ID,
 } from './constants';
 
 
@@ -67,6 +69,7 @@ const initialStateOpenings = {
   clickedRow: null,
   addingRow: null,
   uiSnapShot: null,
+  id: null,
 }
 
 const employeeReducer = (state = initialStateEmployee, action) => {
@@ -143,10 +146,21 @@ const openingsReducer = (state = initialStateOpenings, action) => {
       return {
         ...state, 
       };
+    case FETCH_OPENINGS_BY_ID:
+        return {
+          ...state,
+          id: action.payload
+        };
     case RECEIVE_OPENINGS:
       return {
         ...state,
         data: action.payload,
+      };
+    case RECEIVE_OPENINGS_BY_ID:
+      return {
+        ...state,
+        id: action.payload.id,
+        data: [action.payload.data],
       };
     case DELETE_OPENING:
       return {

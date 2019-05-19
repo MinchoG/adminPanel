@@ -1,5 +1,5 @@
 import { createLogic } from 'redux-logic';
-import { loginError, loginSuccess, receiveEmployees, receiveOpenings } from './actions';
+import { loginError, loginSuccess, receiveEmployees, receiveOpenings, receiveOpeningsById } from './actions';
 import {
   ACTION_LOGIN_REQUEST,
   FETCH_EMPLOYEES,
@@ -9,7 +9,8 @@ import {
   FETCH_OPENINGS,
   DELETE_OPENING,
   SAVE_OPENINGS_POST,
-  SAVE_OPENINGS_PUT
+  SAVE_OPENINGS_PUT,
+  FETCH_OPENINGS_BY_ID
 } from './constants';
 
 import axios from 'axios';
@@ -122,9 +123,7 @@ const FetchOpenings = createLogic({
   async process({ action }, dispatch, done) {
     try {
       const res = await axios.get('http://localhost:3001/openings');
-      
       dispatch(receiveOpenings(res.data));
-      
        return;
     } catch (e) {
       console.log(e);
@@ -133,6 +132,24 @@ const FetchOpenings = createLogic({
     }
   }
 });
+
+const FetchOpeningsById = createLogic({
+  type: FETCH_OPENINGS_BY_ID,
+  async process({ action }, dispatch, done) {
+    try {
+      const res = await axios.get(`http://localhost:3001/openings/${action.payload}`);
+      const payload = {
+        id: action.payload,
+        data: res.data
+      };
+      dispatch(receiveOpeningsById(payload));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      done();
+    }
+  }
+})
 
 const DeleteOpening = createLogic({
   type: DELETE_OPENING,
@@ -205,4 +222,5 @@ export default [
   DeleteOpening,
   SaveOpeningsPOST,
   SaveOpeningsPUT,
+  FetchOpeningsById
 ];

@@ -1,7 +1,7 @@
 const express = require('express');
 const openingsRouter = express.Router();
 const Db = require('./../models/Db');
-const jwt = require('');
+const jwt = require('../helpers/jwt');
 
 openingsRouter.get('/', async (req, res) => {
   try {
@@ -13,7 +13,17 @@ openingsRouter.get('/', async (req, res) => {
   }
 });
 
-openingsRouter.put('/:id', verifyMiddleware, async (req, res) => {
+openingsRouter.get('/:id', async (req, res) => {
+  try {
+    const result = await Db.openings.findOne({ where: {id: req.params.id}});
+    res.send(result);
+  } catch (e) {
+    res.send(e);
+    console.log(e);
+  }
+});
+
+openingsRouter.put('/:id', jwt.verifyMiddleware, async (req, res) => {
   try {
     delete req.body.changedData.id;
     const id = req.params.id;
@@ -35,7 +45,7 @@ openingsRouter.put('/:id', verifyMiddleware, async (req, res) => {
   }
 });
 
-openingsRouter.delete('/:id', verifyMiddleware, async (req, res) => {
+openingsRouter.delete('/:id', jwt.verifyMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -47,7 +57,7 @@ openingsRouter.delete('/:id', verifyMiddleware, async (req, res) => {
   }
 });
 
-openingsRouter.post('/', verifyMiddleware, async (req, res) => {
+openingsRouter.post('/', jwt.verifyMiddleware, async (req, res) => {
   const { ...values } = req.body.changedData;
 
   try {

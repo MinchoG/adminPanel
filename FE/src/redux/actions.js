@@ -16,6 +16,7 @@ import {
   PUT_SELECTED_FILE_IN_STORE,
   FETCH_OPENINGS,
   RECEIVE_OPENINGS,
+  FETCH_OPENINGS_BY_ID,
   DELETE_OPENING,
   EDIT_OPENING,
   TAKE_UI_SNAPSHOT,
@@ -23,7 +24,9 @@ import {
   SAVE_OPENINGS_POST,
   SAVE_OPENINGS_PUT,
   ADD_OPENING,
-  EDIT_OPENING_VALUE, 
+  EDIT_OPENING_VALUE,
+  RECEIVE_OPENINGS_BY_ID,
+  
 } from './constants';
 
 
@@ -110,6 +113,16 @@ export const fetchOpenings = (payload) => ({
   type: FETCH_OPENINGS,
   payload,
 });
+
+export const fetchOpeningsById = (payload) => ({
+  type: FETCH_OPENINGS_BY_ID,
+  payload
+});
+
+export const receiveOpeningsById = (payload) => ({
+  type: RECEIVE_OPENINGS_BY_ID,
+  payload
+})
 
 export const receiveOpenings = (payload) => ({
   type: RECEIVE_OPENINGS,
