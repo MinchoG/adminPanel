@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.less';
 
-import About from './About';
-import Employees from './Employees';
-import Openings from './Openings';
-import Header from './Header';
+import About from './About/About';
+import Employees from './Employees/Employees';
+import Openings from './Openings/Openings';
+import Header from './Header/Header';
 import PrivateRoute from './PrivateRoute';
 import LoginPage from './AdminPanel/LoginPage';
 import LoggedOut from './AdminPanel/LoggedOut';
