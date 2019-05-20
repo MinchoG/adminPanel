@@ -26,6 +26,7 @@ class App extends Component {
           <Route path="/logged_out" component={LoggedOut} />
           <PrivateRoute exact path="/admin/panel/Employees" component={EmployeesAdminPage} />
           <PrivateRoute exact path="/admin/panel/Openings" component={OpeningsAdminPage} />
+          <PrivateRoute exact path="/admin/panel/About" component={AboutAdminPage} />
           <PrivateRoute path="/admin/panel" component={AdminPanel} />
         </div>
       </BrowserRouter>

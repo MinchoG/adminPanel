@@ -1,17 +1,42 @@
-import React, { Component } from 'react';
-import './About.less';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import {
+fetchAbout
+} from '../../redux/actions'
+import "./About.less";
 
 class About extends Component {
+
+  componentDidMount() {
+    this.props.fetchAbout();
+  }
+
   render() {
     return (
       <section className="About">
         <h2>About us</h2>
-        <p>Bacon ipsum dolor amet spare ribs frankfurter rump bacon. Buffalo pork chop shank, capicola drumstick shankle beef ribs doner pastrami. Bacon shank boudin, porchetta alcatra shoulder short loin prosciutto corned beef. Hamburger shoulder salami, andouille tenderloin kielbasa t-bone. Pancetta tri-tip short loin boudin swine filet mignon hamburger cupim pastrami meatball shoulder. Shankle bacon cow, sirloin corned beef fatback jowl tri-tip boudin. Leberkas biltong chuck jowl porchetta.</p>
-        <p>Boudin porchetta leberkas venison kevin short ribs. Ribeye ham fatback, burgdoggen biltong short loin ham hock. Ribeye andouille pork belly pancetta tongue, t-bone venison pork chop shank kevin pig frankfurter cupim. Picanha flank prosciutto capicola leberkas pork chop.</p>
-        <img src="images/globe.png" />
+        {this.props.about.data.map(v => (<p key={v.id}>{v.description}</p>))}
+      <img src={`http://localhost:3001${this.props.about.image}`} alt="big fat globe" />
       </section>
     );
   }
 }
 
-export default About;
+const mapStateToProps = state => ({
+  about: state.about
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchAbout: (payload) => dispatch(fetchAbout(payload)),
+})
+
+About.propTypes = {
+  fetchAbout: PropTypes.func,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (About);

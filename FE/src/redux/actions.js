@@ -26,7 +26,8 @@ import {
   ADD_OPENING,
   EDIT_OPENING_VALUE,
   RECEIVE_OPENINGS_BY_ID,
-  
+  FETCH_ABOUT,
+  RECEIVE_ABOUT,
 } from './constants';
 
 
@@ -168,3 +169,13 @@ export const editOpeningValue = (payload) => ({
   type: EDIT_OPENING_VALUE,
   payload,
   });
+
+export const fetchAbout = (payload) => ({
+  type: FETCH_ABOUT,
+  payload,
+})
+
+export const receiveAbout = (payload) => ({
+  type: RECEIVE_ABOUT,
+  payload,
+})

@@ -1,5 +1,12 @@
 import { createLogic } from 'redux-logic';
-import { loginError, loginSuccess, receiveEmployees, receiveOpenings, receiveOpeningsById } from './actions';
+import { 
+  loginError, 
+  loginSuccess, 
+  receiveEmployees, 
+  receiveOpenings, 
+  receiveOpeningsById,
+  receiveAbout, 
+} from './actions';
 import {
   ACTION_LOGIN_REQUEST,
   FETCH_EMPLOYEES,
@@ -10,7 +17,8 @@ import {
   DELETE_OPENING,
   SAVE_OPENINGS_POST,
   SAVE_OPENINGS_PUT,
-  FETCH_OPENINGS_BY_ID
+  FETCH_OPENINGS_BY_ID,
+  FETCH_ABOUT,
 } from './constants';
 
 import axios from 'axios';
@@ -135,14 +143,20 @@ const FetchOpenings = createLogic({
 
 const FetchOpeningsById = createLogic({
   type: FETCH_OPENINGS_BY_ID,
-  async process({ action }, dispatch, done) {
+  async process({ action, getState }, dispatch, done) {
     try {
       const res = await axios.get(`http://localhost:3001/openings/${action.payload}`);
       const payload = {
         id: action.payload,
         data: res.data
       };
-      dispatch(receiveOpeningsById(payload));
+      if(getState().openings.data.length) {
+        dispatch(receiveOpeningsById(payload));
+      } else {
+        const res = await axios.get('http://localhost:3001/openings');
+        dispatch(receiveOpenings(res.data));
+      }
+      
     } catch (e) {
       console.log(e);
     } finally {
@@ -212,6 +226,20 @@ const SaveOpeningsPUT = createLogic({
   }
 });
 
+const FetchAbout = createLogic({
+  type: FETCH_ABOUT,
+  async process({action, getState}, dispatch, done) {
+    try {
+      const res = await axios.get('http://localhost:3001/about');
+      dispatch(receiveAbout(res.data));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      done();
+    }
+  }
+})
+
 export default [
   LoginLogic,
   FetchEmployees,
@@ -222,5 +250,6 @@ export default [
   DeleteOpening,
   SaveOpeningsPOST,
   SaveOpeningsPUT,
-  FetchOpeningsById
+  FetchOpeningsById,
+  FetchAbout,
 ];

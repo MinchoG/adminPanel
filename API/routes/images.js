@@ -1,6 +1,7 @@
 const express = require('express');
 const imagesRouter = express.Router();
 
-imagesRouter.use('/images', express.static('../static'));
+imagesRouter.use('/', express.static('static'));
+imagesRouter.use(express.static(__dirname + "/public")) //Maybe?
 
 module.exports = imagesRouter;

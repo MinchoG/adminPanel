@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+
 const connection = new Sequelize('ACME-SENIOR', 'root', '123test123', {
   host: 'localhost',
   dialect: 'mysql',
@@ -28,7 +29,8 @@ const employees = connection.define(
       type: Sequelize.BOOLEAN
     }
   },
-  { timestamps: false }
+  { timestamps: false,
+    freezeTableName: true, }
 );
 
 const openings = connection.define(
@@ -46,11 +48,12 @@ const openings = connection.define(
       type: Sequelize.TEXT
     }
   },
-  { timestamps: false }
+  { timestamps: false,
+    freezeTableName: true, }
 );
 
 const admins = connection.define(
-  'admin',
+  'admins',
   {
     id: {
       type: Sequelize.INTEGER,
@@ -64,7 +67,30 @@ const admins = connection.define(
       type: Sequelize.STRING
     }
   },
-  { timestamps: false }
+  { timestamps: false,
+    freezeTableName: true, }
 );
 
-module.exports = { employees, openings, admins, connection };
+const about = connection.define(
+  'about',
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    description: {
+      type: Sequelize.STRING
+    },
+    image: {
+      type: Sequelize.STRING
+    },
+  },
+  { 
+    timestamps: false,
+    freezeTableName: true,
+  }
+);
+
+
+module.exports = { employees, openings, admins, about, connection };

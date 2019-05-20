@@ -7,24 +7,6 @@ import './Employees.less';
 import { fetchEmployees } from '../../redux/actions';
 
 class Employees extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     employees: {big: [], small: []}
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   Api.getEmployees().then(employees => this.setState({ employees: {
-  //     big: employees.filter(function(employee) {
-  //       return employee.big
-  //     }),
-  //     small: employees.filter(function(employee, i) {
-  //       return employees[i].id >2
-  //     })
-  //   } }));
-  // }
-
   renderEmployee(employee) {
     return (
       <div className="employee">
@@ -45,7 +27,7 @@ class Employees extends Component {
         <div className="big">
           {this.props.employee.data.filter(v => v.big).map(employee => this.renderEmployee(employee))}
         </div>
-        <div className="small">{this.props.employee.data.filter(v=>v.big===0).map(employee => this.renderEmployee(employee))}</div>
+        <div className="small">{this.props.employee.data.filter(v => !v.big).map(employee => this.renderEmployee(employee))}</div>
       </section>
     );
   }

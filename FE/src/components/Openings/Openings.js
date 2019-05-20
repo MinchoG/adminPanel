@@ -22,9 +22,10 @@ class Openings extends Component {
   //   this.updateState(this.state.id);
   // }
 
-  componentWillReceiveProps(props) {
+    componentWillReceiveProps(props) {
     if (props.location.pathname !== this.props.location.pathname) {
       this.props.fetchOpeningsById(this.extractId(props.match.params));
+      
     }
   }
 
@@ -35,46 +36,51 @@ class Openings extends Component {
     return null;
   }
 
-  // async updateState(id) {
-  //   const newState = { id, active: null };
-  //   newState.openings = await Api.getOpenings();
-  //   if (id) {
-  //     newState.active = await Api.getOpening(id);
-  //   }
+ 
 
-  //   this.setState(newState);
-  // }
-
-  async componentDidMount() {
-    await this.props.fetchOpenings();
-    console.log('props.opening.data:', this.props.openings.data);
+  componentDidMount() {
+    const careerId = this.extractId(this.props.match.params);
+    if (careerId) {
+      console.log('fetching shit');
+      this.props.fetchOpeningsById(careerId)
+    } else {
+      this.props.fetchOpenings();
+    }
   }
 
   render() {
-    console.log('from RENDER:', this.props.openings.data);
+    
     return (
       <section className="Openings">
         <h2>Hiring</h2>
         <ul>
-          {this.props.openings.data.map(opening => {
-            if (opening.id === this.props.openings.id) {
+          { this.props.openings.data
+            ? (this.props.openings.data.map(opening => {
+              if (opening.id === this.props.openings.id) {
               console.log('I AM IN THE TRUTH case');
               return (
-                <li className="active">
+                <li className="active" key={opening.id}>
                   <Link to="/careers">{opening.title}</Link>
                   <span>{opening.description}</span>
                 </li>
               );
-            }
-            console.log('I AM IN THE FALSE case');
-            return (
-              <li>
+              }
+              console.log('I AM IN THE FALSE case');
+              return (
+                <li key={opening.id}>
                 <Link to={`/careers/${opening.id}`}>{opening.title}</Link>
               </li>
-            );
-          })}
+              );
+              }))
+              : ''
+          }
         </ul>
-        {this.props.openings.clickedRow ? <span>{this.props.openings.data.description}</span> : ''}
+        
+        { 
+          this.props.openings.id 
+          ? <span>{this.props.openings.active[0] ? this.props.openings.active[0].description : ''}</span> 
+          : ''
+          }
       </section>
     );
   }

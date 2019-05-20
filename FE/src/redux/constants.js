@@ -35,3 +35,8 @@ export const SAVE_OPENINGS_POST = 'SAVE_OPENINGS_POST';
 export const ADD_OPENING = 'ADD_OPENING';
 export const EDIT_OPENING_VALUE = 'EDIT_OPENING_VALUE';
 export const CANCEL_EDIT_OPENING = 'CANCEL_EDIT_OPENING';
+
+//about consts
+
+export const FETCH_ABOUT = 'FETCH_ABOUT';
+export const RECEIVE_ABOUT = 'RECEIVE_ABOUT';

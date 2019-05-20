@@ -26,6 +26,8 @@ import {
   ADD_OPENING,
   EDIT_OPENING_VALUE,
   FETCH_OPENINGS_BY_ID,
+  FETCH_ABOUT,
+  RECEIVE_ABOUT,
 } from './constants';
 
 
@@ -66,10 +68,16 @@ const initialStateEmployee = {
 
 const initialStateOpenings = {
   data: [],
+  active: [],
   clickedRow: null,
   addingRow: null,
   uiSnapShot: null,
   id: null,
+}
+
+const initialStateAbout = {
+  data: [],
+  image: null,
 }
 
 const employeeReducer = (state = initialStateEmployee, action) => {
@@ -144,7 +152,8 @@ const openingsReducer = (state = initialStateOpenings, action) => {
   switch (action.type) {
     case FETCH_OPENINGS:
       return {
-        ...state, 
+        ...state,
+        id: null, 
       };
     case FETCH_OPENINGS_BY_ID:
         return {
@@ -155,12 +164,21 @@ const openingsReducer = (state = initialStateOpenings, action) => {
       return {
         ...state,
         data: action.payload,
+        active: action.payload
       };
     case RECEIVE_OPENINGS_BY_ID:
+      // return {
+      //   ...state,
+      //   id: action.payload.id,
+      //   data: [action.payload.data],
+      // };
+      
       return {
         ...state,
-        id: action.payload.id,
-        data: [action.payload.data],
+        id: action.payload.id, 
+        addingRow: null, 
+        clickedRow: null, 
+        active: [action.payload.data]
       };
     case DELETE_OPENING:
       return {
@@ -201,10 +219,30 @@ const openingsReducer = (state = initialStateOpenings, action) => {
   }
 }
 
+const aboutReducer = (state = initialStateAbout, action) => {
+  switch (action.type) {
+    case FETCH_ABOUT:
+      return {
+        ...state,
+        ...action.payload
+      };
+    case RECEIVE_ABOUT:
+      return {
+        ...state,
+        data: action.payload,
+        image: action.payload[0].image
+      }
+  
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   auth: authReducer,
   employee: employeeReducer,
   openings: openingsReducer,
+  about: aboutReducer,
 });
 
 export default rootReducer;
