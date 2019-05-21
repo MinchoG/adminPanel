@@ -67,8 +67,10 @@ const admins = connection.define(
       type: Sequelize.STRING
     }
   },
-  { timestamps: false,
-    freezeTableName: true, }
+  { 
+    timestamps: false,
+    freezeTableName: true, 
+  }
 );
 
 const about = connection.define(

@@ -1,9 +1,7 @@
 const Db = require('../models/Db');
 
-module.exports = (username, password) => {
-  return Db.admin.findOne({
+module.exports = async (username, password) => {
+  return await Db.admins.findOne({
     where: { username, password }
   });
 };
-
-// }

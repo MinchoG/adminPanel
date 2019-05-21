@@ -1,38 +1,30 @@
 import React, { Component } from 'react';
+import { withRouter, NavLink } from 'react-router-dom';
+
+
 
 class AdminPanel extends Component {
-  renderSelect() {
-    const onChange = (e) => {
-      switch (e.target.value) {
-        case 'Employee': {
-          this.props.history.push('admin/panel/Employees');
-          break;
-        }
-        case 'Jobs': {
-          this.props.history.push('admin/panel/Openings');
-          break;
-        }
-        case 'About': {
-          this.props.history.push('admin/panel/About');
-          break;
-        }
-        default:
-          return null;
-      }
-    };
 
+    render() {
     return (
-      <select defaultValue="default" onChange={(e) => onChange(e)}>
-        <option value="default">Please ...</option>
-        <option value="Employee">Employee</option>
-        <option value="Jobs">Jobs</option>
-        <option value="About">About</option>
-      </select>
-    );
-  }
-
-  render() {
-    return <div>{this.renderSelect()}</div>;
+      <div>
+        <NavLink to='/admin/panel/Employees'>
+          <button> 
+            EMPLOYEES 
+          </button>
+        </NavLink>
+        <NavLink to='/admin/panel/Openings'>
+          <button> 
+            OPENINGS 
+          </button>
+        </NavLink>
+        <NavLink to='/admin/panel/About'>
+          <button> 
+            ABOUT 
+          </button>
+        </NavLink>
+      </div>
+    )
   }
 }
-export default AdminPanel;
+export default withRouter(AdminPanel);

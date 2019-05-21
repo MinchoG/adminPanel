@@ -55,7 +55,7 @@ class DisplayTableEmployees extends Component {
           <td>
             <ImageUpload
               handleChange={this.props.handleImageUpload}
-              source={`http://localhost:3001/images/${result.picture}`}
+              source={`http://localhost:3001${result.picture}`}
               isEnabled={index === this.props.clickedRow}
             />
             <br />

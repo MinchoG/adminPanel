@@ -5,7 +5,9 @@ import {
   receiveEmployees, 
   receiveOpenings, 
   receiveOpeningsById,
-  receiveAbout, 
+  receiveAbout,
+  saveAboutWithPOST,
+  saveAboutWithPUT 
 } from './actions';
 import {
   ACTION_LOGIN_REQUEST,
@@ -19,6 +21,8 @@ import {
   SAVE_OPENINGS_PUT,
   FETCH_OPENINGS_BY_ID,
   FETCH_ABOUT,
+  SAVE_ABOUT_POST,
+  SAVE_ABOUT_PUT
 } from './constants';
 
 import axios from 'axios';
@@ -36,7 +40,7 @@ const LoginLogic = createLogic({
       if (res.data.token) {
         dispatch(loginSuccess(res.data.token));
         localStorage.setItem('token', res.data.token);
-        window.location.assign('/admin');
+        window.location.assign('/admin/panel');
         return;
       }
       return dispatch(loginError(res.data.error));
@@ -238,7 +242,43 @@ const FetchAbout = createLogic({
       done();
     }
   }
-})
+});
+
+const SaveAboutPOST = createLogic({
+  type: SAVE_ABOUT_POST,
+  async process({ action, getState }, dispatch, done) {
+    try {
+      console.log('action CHANGED DATA:', action.payload.changedData);
+      await axios.post('http://localhost:3001/about', {
+        changedData: action.payload.changedData,
+        token: action.payload.token
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      done();
+    }
+  }
+});
+
+const SaveAboutPUT = createLogic({
+  type: SAVE_ABOUT_PUT,
+  async process({ action, getState }, dispatch, done) {
+    try {
+      await axios.put(
+        `http://localhost:3001/about/${action.payload.changedData.id}`, {
+          changedData: action.payload.changedData,
+          token: action.payload.token
+        });
+    } catch(e) {
+      console.log(e);
+    } finally {
+      done();
+    }
+  }
+});
+
+
 
 export default [
   LoginLogic,
@@ -252,4 +292,6 @@ export default [
   SaveOpeningsPUT,
   FetchOpeningsById,
   FetchAbout,
+  SaveAboutPOST,
+  SaveAboutPUT
 ];

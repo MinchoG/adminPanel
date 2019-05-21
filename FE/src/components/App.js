@@ -12,6 +12,7 @@ import LoggedOut from './AdminPanel/LoggedOut';
 import AdminPanel from './AdminPanel/AdminPanel';
 import EmployeesAdminPage from './AdminPanel/EmployeesAdminPage';
 import OpeningsAdminPage from './AdminPanel/JobsAdminPage';
+import AboutAdminPage from './AdminPanel/AboutAdminPage';
 
 class App extends Component {
   render() {
@@ -24,10 +25,11 @@ class App extends Component {
           <Route path="/careers/:id?" component={Openings} />
           <Route exact path="/admin" component={LoginPage} />
           <Route path="/logged_out" component={LoggedOut} />
+          <PrivateRoute path="/admin/panel" component={AdminPanel} />
           <PrivateRoute exact path="/admin/panel/Employees" component={EmployeesAdminPage} />
           <PrivateRoute exact path="/admin/panel/Openings" component={OpeningsAdminPage} />
           <PrivateRoute exact path="/admin/panel/About" component={AboutAdminPage} />
-          <PrivateRoute path="/admin/panel" component={AdminPanel} />
+          
         </div>
       </BrowserRouter>
     );
