@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImageUpload from '../ImageUpload';
+import ImageUpload from '../../../ImageUpload';
 
 
 class DisplayTableAbout extends Component {
@@ -55,7 +55,10 @@ class DisplayTableAbout extends Component {
           <td>
             <ImageUpload
               handleChange={this.props.handleImageUpload}
-              source={`http://localhost:3001${result.image}`}
+              source={
+                result.image 
+                ? `http://localhost:3001/images/${result.image}`
+                : ''}
               isEnabled={index === this.props.clickedRow}
             />
             <br />

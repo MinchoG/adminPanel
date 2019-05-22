@@ -22,7 +22,8 @@ import {
   FETCH_OPENINGS_BY_ID,
   FETCH_ABOUT,
   SAVE_ABOUT_POST,
-  SAVE_ABOUT_PUT
+  SAVE_ABOUT_PUT,
+  DELETE_ABOUT
 } from './constants';
 
 import axios from 'axios';
@@ -75,17 +76,21 @@ const DeleteEmployee = createLogic({
 
       if (action.payload) {
         const token = localStorage.getItem('token');
-        const res = await axios.delete(
-          `http://localhost:3001/employees/${action.payload}`,
-          {
-            data: {
-              token
+        if(action.payload){
+          const res = await axios.delete(
+            `http://localhost:3001/employees/${action.payload}`,
+            {
+              data: {
+                token
+              }
             }
+          );
+          if (res.status === 200) {
+            alert('Succesfully deleted from DB');
           }
-        );
-        if (res.status === 200) {
-          alert('Succesfully deleted from DB');
         }
+      } else {
+        alert('Succesfully deleted from DB');
       }
     } catch (e) {
       console.log(e);
@@ -278,6 +283,34 @@ const SaveAboutPUT = createLogic({
   }
 });
 
+const DeleteAbout = createLogic({
+  type: DELETE_ABOUT,
+  async process({ action, getState }, dispatch, done) {
+    try {
+      console.log('action payload:', action.payload);
+
+      if (action.payload) {
+        const token = localStorage.getItem('token');
+        const res = await axios.delete(
+          `http://localhost:3001/about/${action.payload}`,
+          {
+            data: {
+              token
+            }
+          }
+        );
+        if (res.status === 200) {
+          alert('Succesfully deleted from DB');
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      done();
+    }
+  }
+});
+
 
 
 export default [
@@ -293,5 +326,6 @@ export default [
   FetchOpeningsById,
   FetchAbout,
   SaveAboutPOST,
-  SaveAboutPUT
+  SaveAboutPUT,
+  DeleteAbout
 ];

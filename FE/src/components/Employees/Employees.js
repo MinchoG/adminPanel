@@ -10,7 +10,7 @@ class Employees extends Component {
   renderEmployee(employee) {
     return (
       <div className="employee">
-        <img src={employee.picture} alt={employee.picture}/>
+        <img src={`http://localhost:3001/images/${employee.picture}`} alt={employee.picture}/>
         <span>{employee.name}</span>
       </div>
     );

@@ -20,7 +20,7 @@ const signOptions = {
   subject: s,
   audience: a,
   // iat: issued,
-  expiresIn: '1h',
+  expiresIn: '12h',
   algorithm: 'RS256'
 };
 
@@ -32,7 +32,7 @@ const verifyOptions = {
   issuer: i,
   subject: s,
   audience: a,
-  expiresIn: '1h',
+  expiresIn: '12h',
   algorithm: ['RS256']
 };
 

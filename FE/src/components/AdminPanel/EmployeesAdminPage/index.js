@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
+
 import DisplayTable from './DisplayTableEmployees';
 import { 
   fetchEmployees, 
@@ -85,7 +87,7 @@ class EmployeesAdminPage extends Component {
     try {
       if (this.props.employee.selectedFile) {
         fd.append('image', this.props.employee.selectedFile, this.props.employee.selectedFile.name);
-        const postFile = await axios.post('http://localhost:3001/upload', fd, {
+        const postFile = await axios.post('http://localhost:3001/images', fd, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -107,6 +109,7 @@ class EmployeesAdminPage extends Component {
     this.uploadFile();
   };
 
+
   render() {
     return (
       <div className="tableCont">
@@ -121,7 +124,7 @@ class EmployeesAdminPage extends Component {
           handleClickEdit={this.handleClickEdit}
           handleClickCancel={this.handleClickCancel}
         />
-        <button type="button" name="add" id="addButton" onClick={() => this.props.addEmployee({id: null})}>
+        <button type="button" name="add" id="addButton" onClick={() => this.props.addEmployee({id: null, key: uuid()})}>
           Add
         </button>
         <button type="button" name="logout" id="logoutButton" onClick={this.handleClickLogout}>

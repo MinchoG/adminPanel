@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ImageUpload from '../ImageUpload';
+import ImageUpload from '../../../ImageUpload';
 import PropTypes from 'prop-types';
 
 
@@ -39,7 +39,7 @@ class DisplayTableEmployees extends Component {
   displayTable = (data) => {
     return data.map((result, index) => {
       return (
-        <tr key={index} className={this.isEnabled(index)}>
+        <tr key={result.key || result.id} className={this.isEnabled(index)}>
           <td>{index}</td>
           <td>{result.id}</td>
           <td>
@@ -55,7 +55,7 @@ class DisplayTableEmployees extends Component {
           <td>
             <ImageUpload
               handleChange={this.props.handleImageUpload}
-              source={`http://localhost:3001${result.picture}`}
+              source={`http://localhost:3001/images/${result.picture}`}
               isEnabled={index === this.props.clickedRow}
             />
             <br />
@@ -84,7 +84,7 @@ class DisplayTableEmployees extends Component {
               type="button"
               name="delete"
               id={result.id + 'delete'}
-              onClick={() => (this.props.handleClickDelete(result.id))}>
+              onClick={() => (this.props.handleClickDelete(result.id ? result.id : undefined))}>
               Delete
             </button>
           </td>
@@ -95,7 +95,7 @@ class DisplayTableEmployees extends Component {
 
   render() {
     const { data } = this.props;
-    console.log(data);
+    
     return (
       <table>
         <tbody>
@@ -110,7 +110,7 @@ class DisplayTableEmployees extends Component {
             <th>big picture?</th>
             <th colSpan="2">buttons</th>
           </tr>
-          {data && this.displayTable(data)}
+          {this.displayTable(data)}
         </tbody>
       </table>
     );

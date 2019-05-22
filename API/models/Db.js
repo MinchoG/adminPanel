@@ -48,7 +48,7 @@ const openings = connection.define(
       type: Sequelize.TEXT
     }
   },
-  { timestamps: false,
+  { timestamps: true,
     freezeTableName: true, }
 );
 

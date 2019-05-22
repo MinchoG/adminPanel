@@ -18,7 +18,7 @@ class About extends Component {
       <section className="About">
         <h2>About us</h2>
         {this.props.about.data.map(v => (<p key={v.id}>{v.description}</p>))}
-      <img src={`http://localhost:3001${this.props.about.image}`} alt="big fat globe" />
+        <img src={`http://localhost:3001/images/${this.props.about.image}`} alt="big fat globe" />
       </section>
     );
   }

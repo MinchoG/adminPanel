@@ -33,7 +33,8 @@ import {
   CANCEL_EDIT_ABOUT,
   SAVE_ABOUT_POST,
   SAVE_ABOUT_PUT,
-  EDIT_ABOUT_VALUE
+  EDIT_ABOUT_VALUE,
+  ADD_ABOUT,
 } from "./constants";
 
 import { combineReducers } from "redux";
@@ -110,9 +111,11 @@ const employeeReducer = (state = initialStateEmployee, action) => {
         data: action.payload
       };
     case DELETE_EMPLOYEE:
+      console.log('BEFORE:', state.data);
+      console.log('AFTER:', state.data.filter((v) => v.id !== action.payload));
       return {
         ...state,
-        data: state.data.filter(v => v.id !== action.payload)
+        data: state.data.filter((v) => v.id !== action.payload)
       };
     case SAVE_EMPLOYEE_POST:
       return Object.assign({}, state, { clickedRow: null });
@@ -259,6 +262,12 @@ const aboutReducer = (state = initialStateAbout, action) => {
       return {
         ...state,
         data: action.payload
+      };
+    case ADD_ABOUT:
+      return {
+        ...state,
+        data: state.data.concat(action.payload),
+        addingRow: true
       }
     default:
       return state;

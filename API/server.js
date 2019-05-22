@@ -1,7 +1,7 @@
 const express = require('express');
 const Db = require('./models/Db');
 const bodyParser = require('body-parser');
-const port = 3001;
+const port = process.env.PORT || 3001;
 const app = express();
 const employeesRouter = require('./routes/employees');
 const openingsRouter = require('./routes/openings');
@@ -19,12 +19,6 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-
-// app.use(express.static('build'));
-app.get('/', function(req, res) {
-  res.status(200).send('OK');
-});
 
 app.use('/login', loginRouter);
 app.use('/employees', employeesRouter);

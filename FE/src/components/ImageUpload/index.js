@@ -62,9 +62,3 @@ ImageUpload.defaultProps = {
 };
 
 export default ImageUpload;
-
-/* 
-  Usage: 
-
-  <ImageUpload handleChange={console.log}/>
-*/

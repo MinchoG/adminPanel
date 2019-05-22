@@ -34,6 +34,7 @@ import {
   SAVE_ABOUT_PUT,
   SAVE_ABOUT_POST,
   EDIT_ABOUT_VALUE,
+  ADD_ABOUT,
 } from "./constants";
 
 export const receiveLogin = payload => ({
@@ -214,5 +215,10 @@ export const saveAboutWithPOST = payload => ({
 
 export const editAboutValue = payload => ({
   type: EDIT_ABOUT_VALUE,
+  payload
+})
+
+export const addAbout = payload => ({
+  type: ADD_ABOUT,
   payload
 })

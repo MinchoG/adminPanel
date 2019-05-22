@@ -11,6 +11,7 @@ import {
   saveAboutWithPOST,
   saveAboutWithPUT,
   editAboutValue,
+  addAbout,
    } from '../../../redux/actions';
    
 class AboutAdminPage extends Component {
@@ -79,7 +80,7 @@ class AboutAdminPage extends Component {
             handleClickEdit={this.handleClickEdit}
             handleClickCancel={this.handleClickCancel}
           />
-          <button type="button" name="add" id="addButton" onClick={() => this.props.addEmployee({id: null})}>
+          <button type="button" name="add" id="addButton" onClick={() => this.props.addAbout({id: null})}>
             Add
           </button>
           <button type="button" name="logout" id="logoutButton" onClick={this.handleClickLogout}>
@@ -102,7 +103,7 @@ const mapDispatchToProps = (dispatch) => ({
   saveAboutWithPOST: (payload) => dispatch(saveAboutWithPOST(payload)),
   saveAboutWithPUT: (payload) => dispatch(saveAboutWithPUT(payload)),
   editAboutValue: (payload) => dispatch(editAboutValue(payload)),
-
+  addAbout: (payload) => dispatch(addAbout(payload)),
 })
 
 AboutAdminPage.propTypes = {
@@ -113,6 +114,8 @@ AboutAdminPage.propTypes = {
   saveAboutWithPOST: PropTypes.func,
   saveAboutWithPUT: PropTypes.func,
   editAboutValue: PropTypes.func,
+  addAbout: PropTypes.func,
+  
 }
 
 export default connect(
