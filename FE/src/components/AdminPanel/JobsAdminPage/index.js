@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DisplayTable from './DisplayTableJobs';
+import uuid from 'uuid';
 
 import {
   fetchOpenings,
@@ -18,14 +19,12 @@ import {
 
 class JobsAdminPage extends Component {
 
-
   handleClickDelete = async eventId => {
     this.props.deleteClickedOpening(eventId);
   }
 
   handleClickEdit = index => {
     this.props.editOpening(index);
-    // this.props.takeUISnapShot(); DOES NOT WORK WITHOUT IMMUTABLE
   };
 
   handleClickCancel = () => {
@@ -38,7 +37,6 @@ class JobsAdminPage extends Component {
     return;
   };
   
-
   handleClickSave = async (index) => {
     if(this.props.openings.addingRow) {
       //we will do POST, cause we have added a row
@@ -87,7 +85,7 @@ class JobsAdminPage extends Component {
           type="button"
           name="add"
           id="addButton"
-          onClick={() => this.props.addOpening({id: null})}>
+          onClick={() => this.props.addOpening({id: null, key: uuid()})}>
           Add
         </button>
         <button

@@ -268,7 +268,18 @@ const aboutReducer = (state = initialStateAbout, action) => {
         ...state,
         data: state.data.concat(action.payload),
         addingRow: true
-      }
+      };
+      case PUT_SELECTED_FILE_IN_STORE:
+        return {
+          ...state,
+          selectedFile: action.payload
+        };
+      case STORE_UPLOADED_PIC_NAME:
+        return {
+          ...state,
+          data: action.payload,
+          image: action.payload,
+        };
     default:
       return state;
   }

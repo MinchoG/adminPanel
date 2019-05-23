@@ -18,7 +18,7 @@ class ImageUpload extends Component {
     const source = await this.readFile(file);
 
     this.setState({ source });
-
+    
     this.props.handleChange(file);
   };
 

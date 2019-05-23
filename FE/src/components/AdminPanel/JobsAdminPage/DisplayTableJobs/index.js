@@ -37,9 +37,8 @@ class DisplayTableJobs extends React.Component {
   displayTable = (data) => {
     return data.map((result, index) => {
       return (
-        <tr key={index} className={this.isEnabled(index)}>
-          <td>{index}</td>
-          <td>{result.id}</td>
+        <tr key={result.key || result.id} className={this.isEnabled(index)}>
+          
           <td>
             <input
               name='title'
@@ -86,8 +85,6 @@ class DisplayTableJobs extends React.Component {
             <th colSpan="6">Welcome to the admin panel!</th>
           </tr>
           <tr>
-            <th>index</th>
-            <th>id</th>
             <th>title</th>
             <th>description</th>
 

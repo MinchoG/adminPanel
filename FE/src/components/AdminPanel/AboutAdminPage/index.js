@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DisplayTable from './DisplayTableAbout';
+import uuid from 'uuid';
+import axios from 'axios';
 
 import { 
   fetchAbout,
@@ -12,6 +14,8 @@ import {
   saveAboutWithPUT,
   editAboutValue,
   addAbout,
+  putSelectedFileInStore,
+  storeUploadedPicName
    } from '../../../redux/actions';
    
 class AboutAdminPage extends Component {
@@ -66,6 +70,40 @@ class AboutAdminPage extends Component {
     this.props.fetchAbout();
   }
 
+  storeUploadedPictureNameInState = newName => {
+    const { data } = this.props.about;
+    data[this.props.about.clickedRow].image = newName;
+    console.log('DATA MASIV:', data);
+    this.props.storeUploadedPicName(data);
+  };
+
+  uploadFile = async () => {
+    const fd = new FormData();
+    try {
+      if (this.props.about.selectedFile) {
+        fd.append('image', this.props.about.selectedFile, this.props.about.selectedFile.name);
+        const postFile = await axios.post('http://localhost:3001/images', fd, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        this.storeUploadedPictureNameInState(postFile.data);
+      } else {
+        console.log('File in state is null!');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  handleImageUpload = file => {
+    this.props.putSelectedFileInStore(file);
+  };
+
+  handleButtonUploadClick = () => {
+    this.uploadFile();
+  };
+
   
   render() {
       return (
@@ -79,8 +117,9 @@ class AboutAdminPage extends Component {
             handleClickSave={this.handleClickSave}
             handleClickEdit={this.handleClickEdit}
             handleClickCancel={this.handleClickCancel}
+            handleImageUpload={this.handleImageUpload}
           />
-          <button type="button" name="add" id="addButton" onClick={() => this.props.addAbout({id: null})}>
+          <button type="button" name="add" id="addButton" onClick={() => this.props.addAbout({id: null, key: uuid()})}>
             Add
           </button>
           <button type="button" name="logout" id="logoutButton" onClick={this.handleClickLogout}>
@@ -104,6 +143,8 @@ const mapDispatchToProps = (dispatch) => ({
   saveAboutWithPUT: (payload) => dispatch(saveAboutWithPUT(payload)),
   editAboutValue: (payload) => dispatch(editAboutValue(payload)),
   addAbout: (payload) => dispatch(addAbout(payload)),
+  putSelectedFileInStore: (payload) => dispatch(putSelectedFileInStore(payload)),
+  storeUploadedPicName: (payload) => dispatch(storeUploadedPicName(payload)),
 })
 
 AboutAdminPage.propTypes = {
@@ -115,6 +156,12 @@ AboutAdminPage.propTypes = {
   saveAboutWithPUT: PropTypes.func,
   editAboutValue: PropTypes.func,
   addAbout: PropTypes.func,
+  storeUploadedPicName: PropTypes.func,
+  handleClickDelete: PropTypes.func,
+  handleClickSave: PropTypes.func,
+  handleImageUpload: PropTypes.func,
+  handleClickEdit: PropTypes.func,
+  putSelectedFileInStore: PropTypes.func,
   
 }
 

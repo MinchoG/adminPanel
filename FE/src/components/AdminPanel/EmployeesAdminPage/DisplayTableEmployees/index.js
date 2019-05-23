@@ -40,8 +40,7 @@ class DisplayTableEmployees extends Component {
     return data.map((result, index) => {
       return (
         <tr key={result.key || result.id} className={this.isEnabled(index)}>
-          <td>{index}</td>
-          <td>{result.id}</td>
+          
           <td>
             <input
               name="name"
@@ -103,8 +102,7 @@ class DisplayTableEmployees extends Component {
             <th colSpan="7">Welcome to the admin panel!</th>
           </tr>
           <tr>
-            <th>index</th>
-            <th>id</th>
+            
             <th>name</th>
             <th>picture</th>
             <th>big picture?</th>

@@ -39,9 +39,8 @@ class DisplayTableAbout extends Component {
   displayTable = (data) => {
     return data.map((result, index) => {
       return (
-        <tr key={index} className={this.isEnabled(index)}>
-          <td>{index}</td>
-          <td>{result.id}</td>
+        <tr key={result.key || result.id} className={this.isEnabled(index)}>
+     
           <td>
             <input
               name="description"
@@ -55,10 +54,7 @@ class DisplayTableAbout extends Component {
           <td>
             <ImageUpload
               handleChange={this.props.handleImageUpload}
-              source={
-                result.image 
-                ? `http://localhost:3001/images/${result.image}`
-                : ''}
+              source={`http://localhost:3001/images/${result.image}`}
               isEnabled={index === this.props.clickedRow}
             />
             <br />
@@ -96,8 +92,7 @@ class DisplayTableAbout extends Component {
             <th colSpan="7">Welcome to the admin panel!</th>
           </tr>
           <tr>
-            <th>index</th>
-            <th>id</th>
+         
             <th>description</th>
             <th>picture</th>
 
