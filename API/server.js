@@ -8,6 +8,19 @@ const openingsRouter = require('./routes/openings');
 const imagesRouter = require('./routes/images');
 const aboutRouter = require('./routes/about');
 const loginRouter = require('./routes/login');
+const path = require('path');
+
+
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+
+var options = {
+  explorer: true
+};
+ 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+
 
 
 app.use(function(req, res, next) {
@@ -25,6 +38,8 @@ app.use('/employees', employeesRouter);
 app.use('/openings', openingsRouter);
 app.use('/images', imagesRouter);
 app.use('/about', aboutRouter);
+
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
 
 app.listen(port, () => {
   console.log(`Listening on :${port}`);

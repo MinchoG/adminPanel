@@ -36,13 +36,20 @@ const verifyOptions = {
   algorithm: ['RS256']
 };
 
+
 const verifyMiddleware = (req, res, next) => {
+  if(process.env.NODE_ENV === 'development') {
+    console.log('process environment is development!!!')
+    return next();
+  }
+
   const { token } = req.body;
   console.log(token);
   if (!token || !jwt.verify(token, publicKEY, verifyOptions)) {
     res.sendStatus(401);
     return;
   }
+
   console.log('VALID!!!!');
   next();
 };

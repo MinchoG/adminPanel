@@ -1,4 +1,6 @@
 const express = require('express');
+const HttpStatusCodes = require('http-status-codes');
+
 const employeeRouter = express.Router();
 const Db = require('./../models/Db');
 const jwt = require('../helpers/jwt');
@@ -16,26 +18,45 @@ employeeRouter.get('/', async (req, res, next) => {
 });
 
 employeeRouter.put('/:id', jwt.verifyMiddleware, async (req, res, next) => {
-  try {
-    delete req.body.changedData.id;
-    const id = req.params.id;
+  // try {
+  //   // delete req.body.changedData.id;
+  //   const id = req.params.id;
 
-    await Db.employees
-      .findByPk(id)
-      .then(employee => {
-        employee.update(req.body.changedData);
+  //   await Db.employees
+  //     .findByPk(id)
+  //     .then(employee => {
+  //       employee.update(req.body);
 
-        console.log('Record saved!');
-        res.sendStatus(200);
-      })
-      .catch(err => {
-        console.log('No changes were made!');
-        res.sendStatus(409);
-      });
-  } catch (e) {
-    res.send(e);
-    console.log(e);
+  //       console.log('Record saved!');
+  //       res.sendStatus(200);
+  //     })
+  //     .catch(err => {
+  //       console.log('No changes were made!');
+  //       res.sendStatus(409);
+  //     });
+  // } catch (e) {
+  //   res.send(e);
+  //   console.log(e);
+  // }
+
+  const id = req.params.id;
+
+  const employee = await Db.employees.findByPk(id);
+  if (!employee) {
+    return res.sendStatus(HttpStatusCodes.NOT_FOUND);
   }
+
+  if (req.body.id !== undefined) {
+    delete req.body.id;
+  }
+  
+  try {
+    await employee.update(req.body);
+  } catch (err) {
+    return res.sendStatus(HttpStatusCodes.INTERNAL_SERVER_ERROR);
+  }
+  
+  res.sendStatus(HttpStatusCodes.OK);
 });
 
 employeeRouter.delete('/:id', jwt.verifyMiddleware, async (req, res) => {

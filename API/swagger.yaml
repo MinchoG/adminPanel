@@ -1,0 +1,192 @@
+openapi: "3.0.2"
+info:
+  title: "A description of the ACME API"
+  description: "Acme endpoints"
+  version: "1.0.0"
+servers:
+- url: http://localhost:3001/
+  description: Development server
+paths:
+  /about:
+    get:
+      # tags:
+      # - Paragraphs with image for about section
+      summary: "Call current about data for the ACME website"
+      description: "Some random description"
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                title: Sample
+                type: array
+                items:
+                  type: object
+                  description: key value pairs
+                  properties:
+                    id:
+                      type: number
+                    description:
+                      type: string
+                    image:
+                      type: string
+    post:
+      # tags:
+      # - Adds a new paragraph with description
+      summary: "adds new paragraph in About"
+      description: "Some random description"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                changedData:
+                  type: object
+                  properties:
+                    description:
+                      type: string
+                    image:
+                      type: string
+                token:
+                  type: string
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                  image:
+                    type: string
+  /about/{id}:
+    put:
+      summary: update an existing paragraph in About
+      parameters: 
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of updated paragraph
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                changedData:
+                  type: object
+                  properties:
+                    description:
+                      type: string
+                    image:
+                      type: string
+                token:
+                  type: string
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                  image:
+                    type: string
+      
+    delete:
+      summary: delete an existing paragraph in About
+      parameters: 
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of updated paragraph
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        200:
+          description: succesful deletion
+  /employees:
+    get:
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                title: Sample
+                type: array
+                items:
+                  type: object
+                  description: employee object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    picture:
+                      type: string
+                    big:
+                      type: boolean
+                  example: 
+                    id: 1
+                    name: Hugo Fischer
+                    picture: hugo.jpg
+                    big: true
+    post:
+      summary: "adds a new employee in employees section"
+      description: "Some random description"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                changedData:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    picture:
+                      type: string
+                    big:
+                      type: boolean
+                  example:
+                    id: 1
+                    name: Hugo Fischer
+                    picture: hugo.jpg
+                    big: true
+  /employees/{id}:
+    put:
+    delete:
+  /images:
+    post:
+  /login:
+    post:
+  /openings:
+    get:
+    post:
+  /openings/{id}:
+    put:
+    delete:
