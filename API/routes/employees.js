@@ -46,12 +46,12 @@ employeeRouter.put('/:id', jwt.verifyMiddleware, async (req, res, next) => {
     return res.sendStatus(HttpStatusCodes.NOT_FOUND);
   }
 
-  if (req.body.id !== undefined) {
+  if (req.body.changedData.id !== undefined) {
     delete req.body.id;
   }
   
   try {
-    await employee.update(req.body);
+    await employee.update(req.body.changedData);
   } catch (err) {
     return res.sendStatus(HttpStatusCodes.INTERNAL_SERVER_ERROR);
   }
@@ -73,10 +73,10 @@ employeeRouter.delete('/:id', jwt.verifyMiddleware, async (req, res) => {
 
 employeeRouter.post('/', jwt.verifyMiddleware, async (req, res) => {
   const { ...values } = req.body.changedData;
-
+  console.log('values:', values, 'req.body.changedData:', req.body.changedData)
   try {
-    await Db.employees.create(values);
-    res.sendStatus(200);
+    const result = await Db.employees.create(values);
+    res.sendStatus(200).send({id: result.id, name: result.name});
   } catch (e) {
     res.send(e);
     console.log(e);

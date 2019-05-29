@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Employees.less';
+import uuid from 'uuid';
 
 import { fetchEmployees } from '../../redux/actions';
 
 class Employees extends Component {
   renderEmployee(employee) {
     return (
-      <div className="employee">
+      <div className="employee" key={employee.id || uuid()}>
         <img src={`http://localhost:3001/images/${employee.picture}`} alt={employee.picture}/>
         <span>{employee.name}</span>
       </div>

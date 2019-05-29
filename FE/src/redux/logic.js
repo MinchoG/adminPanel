@@ -106,10 +106,11 @@ const SaveEmployeePOST = createLogic({
     //if we have added an empty ROW, we will do POST, otherwise we do PUT
     try {
       console.log('action CHANGED DATA:', action.payload.changedData);
-      await axios.post('http://localhost:3001/employees', {
+      const result = await axios.post('http://localhost:3001/employees', {
         changedData: action.payload.changedData,
         token: action.payload.token
       });
+      console.log('RESULT OT LOGIC:', result);
     } catch (e) {
       console.log(e);
     } finally {
