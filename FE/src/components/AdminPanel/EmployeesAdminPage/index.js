@@ -92,6 +92,7 @@ class EmployeesAdminPage extends Component {
             'Content-Type': 'multipart/form-data'
           }
         });
+        console.log('Form DATA:', fd);
         this.storeUploadedPictureNameInState(postFile.data);
       } else {
         console.log('File in state is null!');

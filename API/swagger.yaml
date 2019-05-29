@@ -93,16 +93,6 @@ paths:
       responses:
         200:
           description: Succesful response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  description:
-                    type: string
-                  image:
-                    type: string
-      
     delete:
       summary: delete an existing paragraph in About
       parameters: 
@@ -177,8 +167,45 @@ paths:
                     name: Hugo Fischer
                     picture: hugo.jpg
                     big: true
+                token:
+                  type: string
+      responses:
+        200:
+          description: Succesful add to DB
   /employees/{id}:
     put:
+      summary: update an existing employee
+      parameters: 
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of updated employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                changedData:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    picture:
+                      type: string
+                    big:
+                      type: boolean
+                token:
+                  type: string
+      responses:
+        200:
+          description: Succesful response
+      
     delete:
   /images:
     post:

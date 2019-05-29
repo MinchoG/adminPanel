@@ -15,7 +15,9 @@ const upload = multer({ storage });
 
 imagesRouter.post('/', upload.single('image'), (req, res, next) => {
     try {
-      res.send(req.file.filename);
+      console.log('FOOO BARE', req.file.image);
+      // console.log('REQ FILE:',req.file,'REQ FILENAME:', req.file.filename)
+      res.send(req.file.image);
       res.end();
     } catch (e) {
       console.log(e);
